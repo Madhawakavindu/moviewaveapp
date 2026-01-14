@@ -33,7 +33,24 @@ class Movie {
 
   // method to convert the JSON data into a dart object
 
+  //  null safety widihata liyanawa
+
   factory Movie.fromJson(Map<String, dynamic> json) {
-    return Movie(adult: adult, genreIds: genreIds, id: id, originalLanguage: originalLanguage, originalTitle: originalTitle, overview: overview, popularity: popularity, releaseDate: releaseDate, title: title, video: video, voteAverage: voteAverage, voteCount: voteCount):
+    return Movie(
+      adult: json["adult"] ?? false,
+      backdropPath: json["backdrop_path"] as String?,
+      genreIds: List<int>.from(json["genre_ids"] ?? []),
+      id: json["id"] ?? 0,
+      originalLanguage: json["original_language"] ?? "",
+      originalTitle: json["original_title"] ?? "",
+      overview: json["overview"] ?? "",
+      popularity: (json["popularity"] ?? 0).toDouble(),
+      posterPath: json["poster_path"] as String?,
+      releaseDate: json["release_date"] ?? "",
+      title: json["title"] ?? "",
+      video: json["video"] ?? false,
+      voteAverage: (json["vote_average"] ?? 0).toDouble(),
+      voteCount: json["vote_count"] ?? 0,
+    );
   }
 }

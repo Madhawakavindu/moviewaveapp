@@ -7,9 +7,21 @@ class TvShow {
 
   TvShow({
     required this.name,
-    required this.posterPath,
+    this.posterPath,
     required this.overview,
     required this.voteAverage,
     required this.firstAirDate,
   });
+
+  //method to convert the json data to dart object
+
+  factory TvShow.fromJson(Map<String, dynamic> json) {
+    return TvShow(
+      name: json["name"] ?? "",
+      posterPath: json["poster_path"] as String?,
+      overview: json["overview"] ?? "",
+      voteAverage: (json["vote_average"] ?? 0).toDouble(),
+      firstAirDate: json["first_air_date"] ?? "",
+    );
+  }
 }
