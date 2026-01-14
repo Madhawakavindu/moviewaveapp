@@ -16,18 +16,24 @@ class Movie {
 
   Movie({
     required this.adult,
-    required this.backdropPath,
+    this.backdropPath,
     required this.genreIds,
     required this.id,
     required this.originalLanguage,
     required this.originalTitle,
     required this.overview,
     required this.popularity,
-    required this.posterPath,
+    this.posterPath,
     required this.releaseDate,
     required this.title,
     required this.video,
     required this.voteAverage,
     required this.voteCount,
   });
+
+  // method to convert the JSON data into a dart object
+
+  factory Movie.fromJson(Map<String, dynamic> json) {
+    return Movie(adult: adult, genreIds: genreIds, id: id, originalLanguage: originalLanguage, originalTitle: originalTitle, overview: overview, popularity: popularity, releaseDate: releaseDate, title: title, video: video, voteAverage: voteAverage, voteCount: voteCount):
+  }
 }
