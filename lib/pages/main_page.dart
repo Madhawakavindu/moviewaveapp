@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moviewave/models/movie_mode.dart';
 import 'package:moviewave/service/movies_service.dart';
+import 'package:moviewave/widgets/movie_details.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -69,6 +70,7 @@ class _MainPageState extends State<MainPage> {
           ),
         ),
       ),
+      //scroll krnna puluwan list ekk hadnwa
       body: NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification notification) {
           if (!_isLoading &&
@@ -86,7 +88,8 @@ class _MainPageState extends State<MainPage> {
               return const Center(child: CircularProgressIndicator());
               ;
             }
-            return ListTile(title: Text(_movies[index].title.toString()));
+            final Movie movie = _movies[index];
+            return MovieDetailWidget(movie: movie);
           },
         ),
       ),
