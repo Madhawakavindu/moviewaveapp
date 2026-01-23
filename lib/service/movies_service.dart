@@ -53,4 +53,73 @@ class MoviesService {
       return [];
     }
   }
+  //search movie
+  //https://api.themoviedb.org/3/search/movie?query=Avengers&api_key=b946d50855df63946e74fae9bdcb49d3
+
+  Future<List<Movie>> searchMovies(String query) async {
+    try {
+      final responce = await http.get(
+        Uri.parse(
+          'https://api.themoviedb.org/3/search/movie?query=$query&api_key=$_apikey',
+        ),
+      );
+      if (responce.statusCode == 200) {
+        final data = json.decode(responce.body);
+        final List<dynamic> results = data["results"];
+
+        return results.map((movieData) => Movie.fromJson(movieData)).toList();
+      } else {
+        throw Exception("Error Searching movies");
+      }
+    } catch (error) {
+      print("Error searching movies: $error");
+      throw Exception("Faild to search movies:$error");
+    }
+  }
+
+  //similar movies
+  //https://api.themoviedb.org/3/movie/299536/similar?api_key=b946d50855df63946e74fae9bdcb49d3
+  Future<List<Movie>> fetchSimilarMovies(int movieId) async {
+    try {
+      final responce = await http.get(
+        Uri.parse(
+          "https://api.themoviedb.org/3/movie/$movieId/similar?api_key=$_apikey",
+        ),
+      );
+      if (responce.statusCode == 200) {
+        final data = json.decode(responce.body);
+        final List<dynamic> results = data["results"];
+
+        return results.map((movieData) => Movie.fromJson(movieData)).toList();
+      } else {
+        throw Exception("Faild to fetch similar movies");
+      }
+    } catch (error) {
+      print("Faild to fetch similar movies: $error");
+      return [];
+    }
+  }
+
+  //recommended movies
+  //https://api.themoviedb.org/3/movie/299536/recommendations?api_key=b946d50855df63946e74fae9bdcb49d3
+  Future<List<Movie>> fetchRecommendedMovies(int movieId) async {
+    try {
+      final responce = await http.get(
+        Uri.parse(
+          "https://api.themoviedb.org/3/movie/$movieId/recommendations?api_key=$_apikey",
+        ),
+      );
+      if (responce.statusCode == 200) {
+        final data = json.decode(responce.body);
+        final List<dynamic> results = data["results"];
+
+        return results.map((movieData) => Movie.fromJson(movieData)).toList();
+      } else {
+        throw Exception("Faild to fetch recommended movies");
+      }
+    } catch (error) {
+      print("Faild to fetch recommended movies: $error");
+      return [];
+    }
+  }
 }
