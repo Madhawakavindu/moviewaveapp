@@ -122,4 +122,35 @@ class MoviesService {
       return [];
     }
   }
+
+  //fetch images by movie ID
+  Future<List<String>> fetchImageFromMovieId(int movieId) async {
+    try {
+      final responce = await http.get(
+        Uri.parse(
+          "https://api.themoviedb.org/3/movie/$movieId/images?api_key=$_apikey,",
+        ),
+      );
+      if (responce.statusCode == 200) {
+        final data = json.decode(responce.body);
+        final List<dynamic> backdrops = data["backdrops"];
+
+        //extract file paths and return the first 10 images
+
+        return backdrops
+            .take(10)
+            .map(
+              (imageData) =>
+                  "https://image.tmdb.org/t/p/w500${imageData["file_path"]}",
+            )
+            .toList();
+      } else {
+        throw Exception("Failed to fetch images");
+      }
+    } catch (error) {
+      print("Error fetching images: $error");
+
+      return [];
+    }
+  }
 }

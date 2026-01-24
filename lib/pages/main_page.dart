@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moviewave/models/movie_mode.dart';
+import 'package:moviewave/pages/single_move_details_page.dart';
 import 'package:moviewave/service/movies_service.dart';
 import 'package:moviewave/widgets/movie_details.dart';
 
@@ -89,7 +90,17 @@ class _MainPageState extends State<MainPage> {
               ;
             }
             final Movie movie = _movies[index];
-            return MovieDetailWidget(movie: movie);
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SingleMoveDetailsPage(movie: movie),
+                  ),
+                );
+              },
+              child: MovieDetailWidget(movie: movie),
+            );
           },
         ),
       ),
